@@ -34,7 +34,7 @@
           this.velocity += this.left;
           
         }
-        this.update(); = function(){
+        this.update = function(){
           this.velocity += this.gravity; //gravity applied when not jumping
           this.y += this.velocity;
           this.velocity *= 0.8 // Air resistance
