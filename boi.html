@@ -8,8 +8,9 @@
     <script src="p5.min.js"></script>
   </head>
   <body>
-    <script>
-    var jumper = new jumper();
+<script>
+var jumper = new jumper();
+var blocker = new blocker();
       var w = window.innerWidth;
       var h = window.innerHeight;
       function setup(){
@@ -19,12 +20,20 @@
         background(0);
         jumper.show();
         jumper.update();
+                blocker.show();
+        blocker.update();
+                  if (keyIsDown === 68){
+          jumper.x += 15;
+        }
+            if (keyIsDown === 65){
+          jumper.x -= 15;
+        }
       }
       function jumper(){
         this.x = 50;
         this.y = 0;
-        this.gravity = 0.5 // gravitational force
-        this.lift = -10;// opposite force
+        this.gravity = 1// gravitational force
+        this.lift = - 20;// opposite force
         this.velocity = 0;
         this.show = function(){
           fill(color('red'));
@@ -48,12 +57,37 @@
           }
         }
       }// obj end
+        function blocker(){
+        this.x = 1000;
+        this.y = 200;
+        this.show = function(){
+                    fill(color('blue'));
+          rect(this.x,this.y,100,100);
+          
+        };
+        this.update = function(){
+          this.x -= 20;
+          if(this.x < -150){
+            var r = random(20,h);
+            this.x = 1500;
+            this.y = r;
+          }
+        }
+      }
       function keyPressed(){
         if (keyCode === 32){
           jumper.up();
         }
+          if (keyCode === 87){
+          jumper.up();
+        }
+                  if (keyCode === 68){
+          jumper.x += 5;
+        }
+            if (keyCode === 65){
+          jumper.x -= 5;
+        }
       }
-      
     </script>
   </body>
 </html>
