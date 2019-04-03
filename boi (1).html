@@ -1,0 +1,160 @@
+<html>
+  <head>
+    <style>
+    body{
+      overflow:hidden;
+    }
+    </style>
+    <script src="p5.min.js"></script>
+    <script src="p5.collide2d.min.js"></script>
+  </head>
+  <body>
+    points:<h1 id="2"></h1>
+<script>
+var jumper = new jumper();
+var blocker = new blocker();
+var blocker2 = new blocker2();
+var blocker3 = new blocker3();
+//var hit = false;
+var points = 1;
+      var w = window.innerWidth;
+      var h = window.innerHeight;
+      function setup(){
+        createCanvas(w,h);
+      }
+      function draw(){
+        background(0);
+        jumper.show();
+        jumper.update();
+                blocker.show();
+        blocker.update();
+        blocker2.show();
+        blocker2.update();
+        blocker3.show();
+        blocker3.update();
+                  if (keyIsDown === 68){
+          jumper.x += 150;
+        }
+            if (keyIsDown === 65){
+          jumper.x -= 150;
+        }
+       //hit = collideRectRect(blocker.x,blocker.y,50,10,jumper.x,jumper.y,50,50);
+     // if (hit = true){
+      //    var points =+ 1;
+      //   window.alert("you dd")
+     //  }
+      }
+      function jumper(){
+        this.x = 70;
+        this.y = 0;
+        this.gravity = .5;// gravitational force
+        this.lift = - 20;// opposite force
+        this.velocity = 0;
+        this.show = function(){
+          fill(color('green'));
+          rect(this.x,this.y,50,50)
+        }
+        this.up = function(){
+          this.velocity += this.lift;
+          
+        }
+        document.getElementById("2").innerHTML = points;
+        this.update = function(){
+          this.velocity += this.gravity; //gravity applied when not jumping
+          this.y += this.velocity;
+          this.velocity *= 0.8 // Air resistance
+          if (this.y > h){
+            this.y = h
+            this.velocity = 0
+          }
+          if (this.y < 0){
+            this.y = 0;
+            this.velocity = 0;
+          }
+        }
+      }// obj end
+        function blocker(){
+        this.x = 1000;
+        this.y = 200;
+        this.show = function(){
+                    fill(color('red'));
+          rect(this.x,this.y,50,10);
+          
+        };
+        this.update = function(){
+          this.x -= 60;
+          if(this.x < -150){
+            var r = random(20,h);
+            this.x = 2500;
+            this.y = r;
+          }
+        }
+      }
+      function keyPressed(){
+        if (keyCode === 32){
+          jumper.up();
+        }
+          if (keyCode === 87){
+          jumper.up();
+        }
+                  if (keyCode === 68){
+          jumper.x += 5;
+        }
+            if (keyCode === 65){
+          jumper.x -= 5;
+        }
+      }
+      function blocker2(){
+        this.x = 1200;
+        this.y = 200;
+        this.show = function(){
+                    fill(color('red'));
+          rect(this.x,this.y,50,10);
+          
+        };
+        this.update = function(){
+          this.x -= 75;
+          if(this.x < -150){
+            var r = random(20,h);
+            this.x = 2500;
+            this.y = r;
+          }
+        }
+      }
+      function keyPressed(){
+        if (keyCode === 32){
+          jumper.up();
+        }
+          if (keyCode === 87){
+          jumper.up();
+        }
+                  if (keyCode === 68){
+          jumper.x += 5;
+          jumper.x += 5;
+        }
+            if (keyCode === 65){
+          jumper.x -= 5;
+          jumper.x -= 5;
+        }
+      }
+      
+      function blocker3(){
+        this.x = 1000;
+        this.y = 200;
+        this.show = function(){
+                    fill(color('red'));
+          rect(this.x,this.y,50,10);
+          
+        };
+        this.update = function(){
+          this.x -= 55;
+          if(this.x < -150){
+            var r = random(20,h);
+            this.x = 2500;
+            this.y = r;
+          }
+        }
+      }
+    </script>
+  </body>
+</html>
