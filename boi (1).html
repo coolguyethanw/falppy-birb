@@ -7,22 +7,32 @@
     </style>
     <script src="p5.min.js"></script>
     <script src="p5.collide2d.min.js"></script>
+    <script src="p5.gif.min.js"></script>
   </head>
   <body>
-    points:<h1 id="2"></h1>
+    Health points:<h1 id="2"></h1>
+    <p>score:<h1 id="3">full</h1></p>
 <script>
 var jumper = new jumper();
 var blocker = new blocker();
 var blocker2 = new blocker2();
 var blocker3 = new blocker3();
-//var hit = false;
-var points = 1;
+var hit = false;
+var hit2 = false;
+var hit3= false;
+var points = 20;
+var score = 0
+var protag;
       var w = window.innerWidth;
       var h = window.innerHeight;
       function setup(){
         createCanvas(w,h);
+        collideDebug(true);
+        protag = loadGif('heli.gif')
       }
       function draw(){
+        ++ score
+        document.getElementById('3').innerHTML = score;
         background(0);
         jumper.show();
         jumper.update();
@@ -32,17 +42,37 @@ var points = 1;
         blocker2.update();
         blocker3.show();
         blocker3.update();
-                  if (keyIsDown === 68){
-          jumper.x += 150;
+                  if (keyIsDown(68)){
+          jumper.x += 5;
         }
-            if (keyIsDown === 65){
-          jumper.x -= 150;
+            if (keyIsDown(65)){
+          jumper.x -= 5;
         }
-       //hit = collideRectRect(blocker.x,blocker.y,50,10,jumper.x,jumper.y,50,50);
-     // if (hit = true){
-      //    var points =+ 1;
-      //   window.alert("you dd")
-     //  }
+       hit = collideRectRect(blocker.x,blocker.y,50,10,jumper.x,jumper.y,50,150);
+       hit2 = collideRectRect(blocker2.x,blocker2.y,50,10,jumper.x,jumper.y,50,150);
+       hit3 = collideRectRect(blocker3.x,blocker3.y,50,10,jumper.x,jumper.y,50,150);
+  
+      if (hit){
+          points =- 15;
+          document.getElementById('2').innerHTML = points;
+          console.log("u got hit bruh moment")
+       }
+       if (hit2){
+          -- points
+          document.getElementById('2').innerHTML = points;
+          console.log("u got hit bruh moment")
+       }
+       if (hit3){
+          -- points
+          document.getElementById('2').innerHTML = points;
+          console.log("u got hit bruh moment")
+       }
+       if (points < 0){
+
+         jumper.explo();
+         noLoop()
+         window.alert("youdead!");
+       }
       }
       function jumper(){
         this.x = 70;
@@ -52,7 +82,12 @@ var points = 1;
         this.velocity = 0;
         this.show = function(){
           fill(color('green'));
-          rect(this.x,this.y,50,50)
+         rect(this.x,this.y,50,150)
+          image(protag,50,150);
+        }
+        this.explo = function(){
+          fill(color('orange'));
+          ellipse(this.x +20,this.y +20,250)
         }
         this.up = function(){
           this.velocity += this.lift;
@@ -61,7 +96,7 @@ var points = 1;
         document.getElementById("2").innerHTML = points;
         this.update = function(){
           this.velocity += this.gravity; //gravity applied when not jumping
-          this.y += this.velocity;
+          this.y += thisheli.velocity;
           this.velocity *= 0.8 // Air resistance
           if (this.y > h){
             this.y = h
@@ -82,7 +117,7 @@ var points = 1;
           
         };
         this.update = function(){
-          this.x -= 60;
+          this.x -= 6;
           if(this.x < -150){
             var r = random(20,h);
             this.x = 2500;
@@ -113,7 +148,7 @@ var points = 1;
           
         };
         this.update = function(){
-          this.x -= 75;
+          this.x -= 7;
           if(this.x < -150){
             var r = random(20,h);
             this.x = 2500;
@@ -147,7 +182,7 @@ var points = 1;
           
         };
         this.update = function(){
-          this.x -= 55;
+          this.x -= 5;
           if(this.x < -150){
             var r = random(20,h);
             this.x = 2500;
